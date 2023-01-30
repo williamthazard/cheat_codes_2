@@ -105,7 +105,6 @@ splash_done = true
 actively_loading_collection = false
 cc_json = include 'lib/cc_json'
 mftconf = include 'lib/mftconf'
-mft = midi.connect()
 
 macro = {}
 for i = 1,8 do
@@ -909,7 +908,6 @@ zilch_leds =
 
 function init()
 
-  mftconf.load_conf(mft,_path.dust.."code/cheat_codes_2/lib/cc-mft.mfs")
   type_of_pattern_loaded = {"grid","grid","grid"}
   loading_arp_from_grid = {nil,nil,nil}
   loading_euclid_from_grid = {nil,nil,nil}
@@ -2072,6 +2070,8 @@ function ping_midi_devices()
       params:set("midi_enc_echo_enabled",2)
       if midi.devices[i].name == "Midi Fighter Twister" then
         mft_connected = true
+        mft = midi.connect(i)
+        mftconf.load_conf(mft,_path.dust.."code/cheat_codes_2/lib/cc-mft.mfs")
       elseif midi.devices[i].name == "Faderfox EC4" then
         ec4_connected = true
       end
